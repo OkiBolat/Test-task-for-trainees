@@ -2,9 +2,9 @@ import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { Draggable } from "react-beautiful-dnd"
 
-export function Task({ task, handleDelete, index }) {
+export function Task({ column, task, handleDelete, index }) {
   return (
-    <Draggable key={task.id} draggableId={task.id} index={index}>
+    <Draggable key={task?.id} draggableId={task?.id} index={index}>
       {(provided, snapshot) => {
         return (
           <div
@@ -23,13 +23,13 @@ export function Task({ task, handleDelete, index }) {
               justifyContent="space-between"
             >
               <Flex flexDirection="column">
-                {task.content}, {task.date}
+                {task?.content}, {task?.date}
               </Flex>
               <IconButton
                 icon={<DeleteIcon />}
                 variant="ghost"
                 size="sm"
-                onClick={() => {}}
+                onClick={() => handleDelete(column.id, task)}
                 aria-label="Delete Task"
               />
             </Box>

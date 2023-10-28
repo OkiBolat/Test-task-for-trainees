@@ -45,17 +45,12 @@ const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return
   const { source, destination } = result
   if (source.droppableId !== destination.droppableId) {
-    console.log(result)
     const sourceColumn = columns[source.droppableId]
     const destColumn = columns[destination.droppableId]
     const sourceTaskIds = [...sourceColumn.taskIds]
     const destTaskIds = [...destColumn.taskIds]
-    console.log(sourceTaskIds)
-    console.log(destTaskIds)
     const [removed] = sourceTaskIds.splice(source.index, 1)
     destTaskIds.splice(destination.index, 0, removed)
-    console.log(sourceTaskIds)
-    console.log(destTaskIds)
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -98,6 +93,23 @@ function App() {
         columns: updatedColumns,
       }
       initialData.tasks = updatedData.tasks
+      console.log(initialData.tasks)
+      // Update the state and initialData
+      return updatedData.columns
+    })
+  }
+
+  const DeleteTaskFromColumn = (columnId, task) => {
+    setColumns((prevColumns) => {
+      const updatedColumns = { ...prevColumns }
+      updatedColumns[columnId].taskIds = updatedColumns[
+        columnId
+      ].taskIds.filter((taskId) => taskId !== task.id)
+      const updatedData = {
+        ...initialData,
+        columns: updatedColumns,
+      }
+      delete initialData.tasks[task.id]
 
       // Update the state and initialData
       return updatedData.columns
@@ -127,6 +139,7 @@ function App() {
                 tasks={tasks}
                 key={id}
                 addTaskToColumn={addTaskToColumn}
+                DeleteTaskFromColumn={DeleteTaskFromColumn}
               />
             )
           })}

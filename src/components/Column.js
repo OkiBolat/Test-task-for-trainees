@@ -7,7 +7,13 @@ import { Task } from "./Task"
 
 import ModalAddTask from "./ModalAddTask"
 
-export function Column({ column, id, tasks, addTaskToColumn }) {
+export function Column({
+  column,
+  id,
+  tasks,
+  addTaskToColumn,
+  DeleteTaskFromColumn,
+}) {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false)
 
   return (
@@ -60,11 +66,16 @@ export function Column({ column, id, tasks, addTaskToColumn }) {
               >
                 {column.taskIds.map((taskId, index) => {
                   const task = tasks.find((task) => {
-                    return task.id === taskId
+                    return task?.id === taskId
                   })
                   return (
                     <Box width={"100%"} key={index}>
-                      <Task handleDelete={() => {}} task={task} index={index} />
+                      <Task
+                        column={column}
+                        handleDelete={DeleteTaskFromColumn}
+                        task={task}
+                        index={index}
+                      />
                     </Box>
                   )
                 })}
