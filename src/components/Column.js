@@ -17,7 +17,7 @@ export function Column({
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false)
 
   return (
-    <Flex
+    <Flex // Флекс-контейнер каждой колонки
       spacing={2}
       width="250px"
       minHeight="600px"
@@ -26,7 +26,7 @@ export function Column({
       borderRadius="md"
       flexDirection="column"
       alignItems="start"
-      m={2}
+      m={5}
     >
       <Text
         w={"100%"}
@@ -39,7 +39,7 @@ export function Column({
         color="white"
         bg={column.color}
         mb={2}
-        fontWeight="bold"
+        fontWeight="bold" // Название каждой колонки
       >
         {column.title}, {column.taskIds.length}
       </Text>
@@ -47,29 +47,34 @@ export function Column({
         onClick={() => {
           setIsAddTaskModalOpen(true)
         }}
+        mb={2}
       >
         Добавить задачу
       </Button>
       <Droppable droppableId={id}>
         {(provided, snapshot) => {
           return (
-            <div
+            <div // Посадочное место для draggable
               {...provided.droppableProps}
               ref={provided.innerRef}
-              style={{ height: "200px", width: "100%" }}
+              style={{ height: "100%", width: "100%" }}
             >
-              <VStack
-                spacing={2}
+              <VStack // вертикальная колонка для элементов
                 width="100%"
                 height="100%"
                 transition="background-color 0.2s ease"
+                spacing={0}
               >
                 {column.taskIds.map((taskId, index) => {
                   const task = tasks.find((task) => {
                     return task?.id === taskId
                   })
                   return (
-                    <Box width={"100%"} key={index}>
+                    <Box
+                      width={"100%"}
+                      key={index}
+                      // блок для каждой задачи
+                    >
                       <Task
                         column={column}
                         handleDelete={DeleteTaskFromColumn}

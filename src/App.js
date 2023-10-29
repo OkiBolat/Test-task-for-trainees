@@ -2,7 +2,6 @@ import { Box, Flex } from "@chakra-ui/react"
 import { useState } from "react"
 import { Column } from "./components/Column"
 import { DragDropContext } from "react-beautiful-dnd"
-import { v4 as uuid } from "uuid"
 
 export const initialData = {
   tasks: {
@@ -83,7 +82,6 @@ function App() {
     setColumns((prevColumns) => {
       const updatedColumns = { ...prevColumns }
       updatedColumns[columnId].taskIds.push(task.id)
-      // Update the initialData with the new task
       const updatedData = {
         ...initialData,
         tasks: {
@@ -94,7 +92,6 @@ function App() {
       }
       initialData.tasks = updatedData.tasks
       console.log(initialData.tasks)
-      // Update the state and initialData
       return updatedData.columns
     })
   }
@@ -110,18 +107,21 @@ function App() {
         columns: updatedColumns,
       }
       delete initialData.tasks[task.id]
-
-      // Update the state and initialData
       return updatedData.columns
     })
   }
 
   return (
-    <Box minHeight={"100vh"} overflow={"hidden"} bg={"blackAlpha.600"} p={5}>
+    <Box
+      minHeight={"100vh"}
+      overflow={"hidden"}
+      bg={"blackAlpha.600"}
+      p={5} // wrapper
+    >
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
-        <Flex
+        <Flex // Флекс-контейнер для колонок
           width={"fit-content"}
           margin={"auto"}
           justifyContent={"space-between"}

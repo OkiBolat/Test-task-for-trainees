@@ -11,21 +11,29 @@ export function Task({ column, task, handleDelete, index }) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            style={{
+              margin: "0 0 8px 0",
+              minHeight: "50px",
+              color: "white",
+              ...provided.draggableProps.style,
+            }}
           >
             <Box
               w={"100%"}
               p={2}
-              bg="blue.100"
+              bg="blue.400"
               borderRadius="md"
-              mb={2}
               display="flex"
               alignItems="center"
               justifyContent="space-between"
             >
-              <Flex flexDirection="column">
+              <Flex
+                flexDirection="column"
+                // Содержимое таска
+              >
                 {task?.content}, {task?.date}
               </Flex>
-              <IconButton
+              <IconButton // иконка
                 icon={<DeleteIcon />}
                 variant="ghost"
                 size="sm"

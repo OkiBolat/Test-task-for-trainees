@@ -20,17 +20,21 @@ export default function ModalAddTask({
   addTaskToColumn,
 }) {
   const [inputValue, setInputValue] = useState("")
+  const [isInputValid, setIsInputValid] = useState(true)
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const retTask = {
-      id: uuid(),
-      content: inputValue,
-      date: getDate(),
+    if (!!inputValue) {
+      const retTask = {
+        id: uuid(),
+        content: inputValue,
+        date: getDate(),
+      }
+      addTaskToColumn(column.id, retTask)
+      setIsAddTaskModalOpen(false)
+    } else {
+      setIsInputValid(false)
     }
-
-    addTaskToColumn(column.id, retTask)
-    setIsAddTaskModalOpen(false)
   }
   return (
     <Modal isOpen={true} onClose={() => setIsAddTaskModalOpen(false)}>
@@ -43,6 +47,7 @@ export default function ModalAddTask({
             <FormControl>
               <FormLabel>Содержимое задачи</FormLabel>
               <Input
+                isInvalid={!isInputValid}
                 value={inputValue}
                 onChange={(event) => {
                   setInputValue(event.target.value)
