@@ -1,7 +1,6 @@
 import { Box, Flex, Text, VStack } from "@chakra-ui/react"
 import { useState } from "react"
 import { Droppable } from "react-beautiful-dnd"
-import { v4 as uuid } from "uuid"
 import { Button } from "@chakra-ui/react"
 import { Task } from "./Task"
 
