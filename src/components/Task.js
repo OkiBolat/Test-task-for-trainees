@@ -1,8 +1,14 @@
-import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
+import { Box, Flex, IconButton } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { Draggable } from "react-beautiful-dnd"
+import { useDispatch } from "react-redux"
+import { removeTask } from "../store/slices/board.slice"
 
-export function Task({ column, task, handleDelete, index }) {
+export function Task({ column, task, index }) {
+  const dispatch = useDispatch()
+  const handleRemoveTask = ([columnId, task]) => {
+    dispatch(removeTask([columnId, task]))
+  }
   return (
     <Draggable key={task?.id} draggableId={task?.id} index={index}>
       {(provided, snapshot) => {
@@ -37,7 +43,7 @@ export function Task({ column, task, handleDelete, index }) {
                 icon={<DeleteIcon />}
                 variant="ghost"
                 size="sm"
-                onClick={() => handleDelete(column.id, task)}
+                onClick={() => handleRemoveTask([column.id, task])}
                 aria-label="Delete Task"
               />
             </Box>

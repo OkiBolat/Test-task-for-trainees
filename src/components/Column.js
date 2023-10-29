@@ -3,16 +3,9 @@ import { useState } from "react"
 import { Droppable } from "react-beautiful-dnd"
 import { Button } from "@chakra-ui/react"
 import { Task } from "./Task"
-
 import ModalAddTask from "./ModalAddTask"
 
-export function Column({
-  column,
-  id,
-  tasks,
-  addTaskToColumn,
-  DeleteTaskFromColumn,
-}) {
+export function Column({ column, id, tasks }) {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false)
 
   return (
@@ -74,12 +67,7 @@ export function Column({
                       key={index}
                       // блок для каждой задачи
                     >
-                      <Task
-                        column={column}
-                        handleDelete={DeleteTaskFromColumn}
-                        task={task}
-                        index={index}
-                      />
+                      <Task column={column} task={task} index={index} />
                     </Box>
                   )
                 })}
@@ -88,7 +76,6 @@ export function Column({
                 <ModalAddTask
                   setIsAddTaskModalOpen={setIsAddTaskModalOpen}
                   column={column}
-                  addTaskToColumn={addTaskToColumn}
                 />
               )}
               {provided.placeholder}

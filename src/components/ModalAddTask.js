@@ -14,13 +14,15 @@ import {
   FormControl,
   FormLabel,
 } from "@chakra-ui/react"
-export default function ModalAddTask({
-  setIsAddTaskModalOpen,
-  column,
-  addTaskToColumn,
-}) {
+import { useDispatch } from "react-redux"
+import { addTask } from "../store/slices/board.slice"
+
+export default function ModalAddTask({ setIsAddTaskModalOpen, column }) {
   const [inputValue, setInputValue] = useState("")
   const [isInputValid, setIsInputValid] = useState(true)
+  const dispatch = useDispatch()
+  const handleAddTask = ([columnId, task]) =>
+    dispatch(addTask([columnId, task]))
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -30,7 +32,7 @@ export default function ModalAddTask({
         content: inputValue,
         date: getDate(),
       }
-      addTaskToColumn(column.id, retTask)
+      handleAddTask([column.id, retTask])
       setIsAddTaskModalOpen(false)
     } else {
       setIsInputValid(false)

@@ -1,15 +1,17 @@
 import { Box, Flex } from "@chakra-ui/react"
-import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { changeColumns } from "./store/slices/board.slice"
 import { Column } from "./components/Column"
 import { DragDropContext } from "react-beautiful-dnd"
-
 export const initialData = {
-  tasks: {},
+  tasks: {
+    "task-1": { id: "task-1", content: "task content", date: "28.10.23" },
+  },
   columns: {
     "column-1": {
       id: "column-1",
       title: "Planned",
-      taskIds: [],
+      taskIds: ["task-1"],
       color: "#ff4244",
     },
     "column-2": {
@@ -33,7 +35,6 @@ export const initialData = {
     },
   },
 }
-
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return
   const { source, destination } = result
@@ -70,41 +71,10 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 }
 function App() {
-  const [columns, setColumns] = useState(initialData.columns)
-
-  const addTaskToColumn = (columnId, task) => {
-    setColumns((prevColumns) => {
-      const updatedColumns = { ...prevColumns }
-      updatedColumns[columnId].taskIds.push(task.id)
-      const updatedData = {
-        ...initialData,
-        tasks: {
-          ...initialData.tasks,
-          [task.id]: task,
-        },
-        columns: updatedColumns,
-      }
-      initialData.tasks = updatedData.tasks
-      console.log(initialData.tasks)
-      return updatedData.columns
-    })
-  }
-
-  const DeleteTaskFromColumn = (columnId, task) => {
-    setColumns((prevColumns) => {
-      const updatedColumns = { ...prevColumns }
-      updatedColumns[columnId].taskIds = updatedColumns[
-        columnId
-      ].taskIds.filter((taskId) => taskId !== task.id)
-      const updatedData = {
-        ...initialData,
-        columns: updatedColumns,
-      }
-      delete initialData.tasks[task.id]
-      return updatedData.columns
-    })
-  }
-
+  const dispatch = useDispatch()
+  const columns = useSelector((state) => state.board.columns)
+  const tasks = useSelector((state) => state.board.tasks)
+  const handleDragEnd = (col) => dispatch(changeColumns(col))
   return (
     <Box
       minHeight={"100vh"}
@@ -113,7 +83,7 @@ function App() {
       p={5} // wrapper
     >
       <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        onDragEnd={(result) => onDragEnd(result, columns, handleDragEnd)}
       >
         <Flex // Флекс-контейнер для колонок
           width={"fit-content"}
@@ -123,17 +93,15 @@ function App() {
           flexWrap={"wrap"}
         >
           {Object.entries(columns).map(([id, column]) => {
-            const tasks = column.taskIds.map(
-              (taskId) => initialData.tasks[taskId]
+            const tasksFromColumn = column.taskIds.map(
+              (taskId) => tasks[taskId]
             )
             return (
               <Column
                 id={id}
                 column={column}
-                tasks={tasks}
+                tasks={tasksFromColumn}
                 key={id}
-                addTaskToColumn={addTaskToColumn}
-                DeleteTaskFromColumn={DeleteTaskFromColumn}
               />
             )
           })}
