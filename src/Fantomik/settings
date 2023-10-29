@@ -1,0 +1,12 @@
+INSTALLED_APPS = [
+
+'board.apps.BoardConfig',
+'rest_framework',
+
+'api.apps.ApiConfig',
+
+'crispy_forms',
+
+'crispy_tailwind',
+
+]
