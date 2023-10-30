@@ -28,7 +28,7 @@ const boardSlice = createSlice({
       localStorage.setItem("appData", JSON.stringify(state))
     },
     changeTask: (state, action) => {
-      console.log(action)
+      state.tasks[action.payload.id] = action.payload
     },
 
     changeColumns: (state, action) => {
@@ -41,5 +41,6 @@ const boardSlice = createSlice({
   },
 })
 
-export const { addTask, removeTask, changeColumns } = boardSlice.actions
+export const { addTask, removeTask, changeTask, changeColumns } =
+  boardSlice.actions
 export default boardSlice.reducer

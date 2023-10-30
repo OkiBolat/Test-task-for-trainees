@@ -4,7 +4,6 @@ import { Droppable } from "react-beautiful-dnd"
 import { Button } from "@chakra-ui/react"
 import { Task } from "./Task"
 import ModalAddTask from "./ModalAddTask"
-import ModalEditTask from "./ModalEditTask"
 
 export function Column({ column, id, tasks }) {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false)

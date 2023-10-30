@@ -10,12 +10,9 @@ import {
   Button,
   Input,
   FormControl,
-  FormLabel,
-  Text,
 } from "@chakra-ui/react"
-import { useDispatch, useSelector } from "react-redux"
-import { addTask } from "../store/slices/board.slice"
-import { removeTask } from "../store/slices/board.slice"
+import { useDispatch } from "react-redux"
+import { removeTask, changeTask } from "../store/slices/board.slice"
 
 export default function ModalEditTask({
   setIsEditTaskModalOpen,
@@ -27,8 +24,23 @@ export default function ModalEditTask({
     task.description
   )
   const dispatch = useDispatch()
+  const handleEditTask = (newTask) => {
+    dispatch(changeTask(newTask))
+  }
   const handleRemoveTask = ([columnId, task]) => {
     dispatch(removeTask([columnId, task]))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const newTask = {
+      id: task.id,
+      content: nameInputValue,
+      description: descriptionInputValue,
+      date: task.date,
+    }
+    handleEditTask(newTask)
+    setIsEditTaskModalOpen(false)
   }
   return (
     <Modal isOpen={true} onClose={() => setIsEditTaskModalOpen(false)}>
@@ -36,7 +48,7 @@ export default function ModalEditTask({
       <ModalContent>
         <ModalHeader>{task.content}</ModalHeader>
         <ModalCloseButton />
-        <form>
+        <form onSubmit={handleSubmit}>
           <ModalBody>
             <FormControl>
               <Input
@@ -65,7 +77,11 @@ export default function ModalEditTask({
             >
               Удалить
             </Button>
-            <Button colorScheme="blue" type="submit">
+            <Button
+              colorScheme="blue"
+              type="submit"
+              onClick={() => handleEditTask(task)}
+            >
               Сохранить
             </Button>
           </ModalFooter>
