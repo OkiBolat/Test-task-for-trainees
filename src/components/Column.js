@@ -78,6 +78,7 @@ export function Column({ column, id, tasks }) {
                   column={column}
                 />
               )}
+
               {provided.placeholder}
             </div>
           )
