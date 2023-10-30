@@ -20,8 +20,6 @@ const boardSlice = createSlice({
       localStorage.setItem("appData", JSON.stringify(state))
     },
     removeTask: (state, action) => {
-      console.log(state)
-      console.log(action)
       state.columns[action.payload[0]].taskIds = state.columns[
         action.payload[0]
       ].taskIds.filter((taskId) => taskId !== action.payload[1].id)
@@ -29,9 +27,11 @@ const boardSlice = createSlice({
       delete state.tasks[action.payload[1].id]
       localStorage.setItem("appData", JSON.stringify(state))
     },
-    changeColumns: (state, action) => {
+    changeTask: (state, action) => {
       console.log(action)
+    },
 
+    changeColumns: (state, action) => {
       state.columns = {
         ...state.columns,
         ...action.payload,

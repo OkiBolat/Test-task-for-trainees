@@ -5,7 +5,12 @@ import { Column } from "./components/Column"
 import { DragDropContext } from "react-beautiful-dnd"
 export const initialData = {
   tasks: {
-    "task-1": { id: "task-1", content: "task content", date: "28.10.23" },
+    "task-1": {
+      id: "task-1",
+      content: "task content",
+      description: "description of the task",
+      date: "28.10.23",
+    },
   },
   columns: {
     "column-1": {

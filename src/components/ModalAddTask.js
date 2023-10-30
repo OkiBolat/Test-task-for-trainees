@@ -18,7 +18,8 @@ import { useDispatch } from "react-redux"
 import { addTask } from "../store/slices/board.slice"
 
 export default function ModalAddTask({ setIsAddTaskModalOpen, column }) {
-  const [inputValue, setInputValue] = useState("")
+  const [nameInputValue, setNameInputValue] = useState("")
+  const [descriptionInputValue, setDescriptionInputValue] = useState("")
   const [isInputValid, setIsInputValid] = useState(true)
   const dispatch = useDispatch()
   const handleAddTask = ([columnId, task]) =>
@@ -26,10 +27,11 @@ export default function ModalAddTask({ setIsAddTaskModalOpen, column }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (!!inputValue) {
+    if (!!nameInputValue) {
       const retTask = {
         id: uuid(),
-        content: inputValue,
+        content: nameInputValue,
+        description: descriptionInputValue,
         date: getDate(),
       }
       handleAddTask([column.id, retTask])
@@ -50,11 +52,22 @@ export default function ModalAddTask({ setIsAddTaskModalOpen, column }) {
               <FormLabel>Содержимое задачи</FormLabel>
               <Input
                 isInvalid={!isInputValid}
-                value={inputValue}
+                value={nameInputValue}
                 onChange={(event) => {
-                  setInputValue(event.target.value)
+                  setNameInputValue(event.target.value)
+                }}
+                placeholder="Введите имя задачи..."
+                variant={"filled"}
+              />
+
+              <Input
+                value={descriptionInputValue}
+                onChange={(event) => {
+                  setDescriptionInputValue(event.target.value)
                 }}
                 placeholder="Введите содержимое задачи..."
+                mt={"20px"}
+                variant={"filled"}
               />
             </FormControl>
           </ModalBody>

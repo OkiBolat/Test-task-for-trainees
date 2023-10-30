@@ -1,17 +1,14 @@
 import { Box, Flex, IconButton } from "@chakra-ui/react"
-import { DeleteIcon } from "@chakra-ui/icons"
+import { InfoOutlineIcon } from "@chakra-ui/icons"
 import { Draggable } from "react-beautiful-dnd"
-import { useDispatch } from "react-redux"
-import { removeTask } from "../store/slices/board.slice"
+import { useState } from "react"
+import ModalEditTask from "./ModalEditTask"
 
 export function Task({ column, task, index }) {
-  const dispatch = useDispatch()
-  const handleRemoveTask = ([columnId, task]) => {
-    dispatch(removeTask([columnId, task]))
-  }
+  const [isEditTaskModalOpen, setIsEditTaskModalOpen] = useState(false)
   return (
     <Draggable key={task?.id} draggableId={task?.id} index={index}>
-      {(provided, snapshot) => {
+      {(provided) => {
         return (
           <div
             ref={provided.innerRef}
@@ -40,13 +37,21 @@ export function Task({ column, task, index }) {
                 {task?.content}, {task?.date}
               </Flex>
               <IconButton // иконка
-                icon={<DeleteIcon />}
+                icon={<InfoOutlineIcon />}
                 variant="ghost"
+                color={"blackAlpha.600"}
                 size="sm"
-                onClick={() => handleRemoveTask([column.id, task])}
+                onClick={() => setIsEditTaskModalOpen(true)}
                 aria-label="Delete Task"
               />
             </Box>
+            {isEditTaskModalOpen && (
+              <ModalEditTask
+                setIsEditTaskModalOpen={setIsEditTaskModalOpen}
+                task={task}
+                column={column}
+              />
+            )}
           </div>
         )
       }}
