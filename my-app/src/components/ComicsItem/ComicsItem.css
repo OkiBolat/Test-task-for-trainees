@@ -1,0 +1,28 @@
+.ComicsItem{
+    width: 30%;
+    margin: 1%;
+    align-self: flex-start;
+    color: white;
+}
+.ComicsItem img{
+    width: 100%;
+}
+.heading{
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color:#070707;
+    text-shadow: 0 0 3px white;
+}
+.ComicsItem p{
+    margin-bottom: 5px;
+}
+.ComicsItem p span{
+    color: darkred;
+    font-weight: bold;
+    text-shadow: 0 0 3px white;
+}
+.desc{
+    font-size: 14px;
+    font-style: italic;
+}

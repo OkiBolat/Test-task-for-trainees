@@ -1,0 +1,12 @@
+.CatalogList{
+    background-image: url(https://banner.holidaypng.com/20191012/ypy/black-bird-black-and-white-for-halloween-5da191772b43e3.59355354.png);
+    background-position: center;
+    background-color: grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 2px solid #070707;
+    margin: 30px 0;
+}

@@ -1,0 +1,11 @@
+.NavbarItem{
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
+a{
+    color: #828282;
+    &:hover{
+        color: #070707;
+    }
+}
